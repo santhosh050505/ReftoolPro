@@ -246,7 +246,6 @@ const calculatePressureFromTemp = async (data) => {
     isAbsolute = true,
     atmOffset = ATM_PRESSURE_BAR
   } = data;
-
   try {
     const tempNum = parseFloat(temperature);
     if (isNaN(tempNum)) {
