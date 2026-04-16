@@ -1,0 +1,139 @@
+/* ============================================
+   REFRIGERANT SLIDER LAYOUT
+   Desktop-first responsive grid layout
+   ============================================ */
+
+/* Base desktop layout (1200px+) */
+.refrigerant-slider-grid {
+  display: grid;
+  grid-template-columns: 80px 0.8fr 1.2fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sidebar refrigerant-info input-panel";
+  gap: 24px;
+  min-height: calc(100vh - 56px);
+  background: var(--color-bg);
+  align-items: start;
+  padding: 24px 24px 24px 8px;
+  overflow-y: hidden;
+}
+
+.refrigerant-slider-grid>* {
+  min-width: 0;
+}
+
+.refrigerant-slider-grid>*:nth-child(1) {
+  grid-area: sidebar;
+}
+
+.refrigerant-slider-grid>*:nth-child(2) {
+  grid-area: refrigerant-info;
+}
+
+.refrigerant-slider-grid>*:nth-child(3) {
+  grid-area: input-panel;
+}
+
+/* Desktop explicit layout */
+.refrigerant-slider-grid.desktop-layout {
+  display: grid;
+  grid-template-columns: 80px 0.8fr 1.2fr;
+  gap: 24px;
+  padding: 24px 24px 24px 8px;
+}
+
+/* Tablet layout (1024px to 1199px) */
+@media (max-width: 1199px) {
+
+  .refrigerant-slider-grid,
+  .refrigerant-slider-grid.desktop-layout {
+    grid-template-columns: 0px 0.9fr 1.1fr;
+    /* Reduce sidebar space in narrow view */
+    gap: 16px;
+    padding: 16px;
+  }
+}
+
+/* Stacking threshold moved to 1024px for split-screen support */
+@media (max-width: 1024px) {
+
+  .refrigerant-slider-grid,
+  .refrigerant-slider-grid.desktop-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "refrigerant-info"
+      "input-panel";
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .refrigerant-slider-grid>*:nth-child(1) {
+    display: none;
+    /* Hide sidebar div when stacked */
+  }
+}
+
+/* Small tablet (600px to 767px) */
+@media (max-width: 767px) {
+
+  .refrigerant-slider-grid,
+  .refrigerant-slider-grid.desktop-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "sidebar"
+      "refrigerant-info"
+      "input-panel";
+    gap: 12px;
+    padding: 12px;
+    min-height: auto;
+  }
+}
+
+/* Mobile layout (<1025px) - REVERSE ORDER: slider first, info second */
+@media (max-width: 1024px) {
+
+  .refrigerant-slider-grid,
+  .refrigerant-slider-grid.desktop-layout,
+  .refrigerant-slider-grid.mobile-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: auto;
+    padding: 8px;
+    background: var(--color-bg);
+  }
+
+  .refrigerant-slider-grid>* {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Mobile order: sidebar (hidden), input-panel (slider - 1st), refrigerant-info (info - 2nd) */
+  .refrigerant-slider-grid>*:nth-child(1) {
+    order: 1;
+    /* sidebar first (hidden on mobile) */
+  }
+
+  .refrigerant-slider-grid>*:nth-child(2) {
+    order: 3;
+    /* refrigerant-info appears second (below slider) */
+  }
+
+  .refrigerant-slider-grid>*:nth-child(3) {
+    order: 2;
+    /* input-panel (slider) appears first */
+  }
+}
+
+/* Mobile explicit layout */
+.refrigerant-slider-grid.mobile-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.mobile-layout>* {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}

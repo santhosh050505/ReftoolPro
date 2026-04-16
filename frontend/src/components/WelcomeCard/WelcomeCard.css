@@ -1,0 +1,360 @@
+/* Welcome Card Styles */
+
+.welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: overlayFadeIn 0.3s ease;
+  padding: 20px;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.welcome-card {
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  padding: 32px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: cardSlideUp 0.4s ease;
+}
+
+@keyframes cardSlideUp {
+  from {
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.welcome-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--color-secondary-text);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-primary-text);
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.welcome-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  animation: welcomeBounce 1s ease-in-out;
+}
+
+@keyframes welcomeBounce {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.welcome-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary-text);
+  margin: 0 0 8px 0;
+}
+
+.welcome-subtitle {
+  font-size: 1rem;
+  color: var(--color-secondary-text);
+  margin: 0;
+}
+
+.welcome-content {
+  margin-bottom: 24px;
+}
+
+.welcome-section {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(182, 160, 120, 0.05);
+  border-radius: 10px;
+  border-left: 3px solid var(--color-accent);
+}
+
+.section-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.section-text h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary-text);
+  margin: 0 0 6px 0;
+}
+
+.section-text p {
+  font-size: 0.95rem;
+  color: var(--color-secondary-text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.quick-start {
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.quick-start h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin: 0 0 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quick-start ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--color-secondary-text);
+}
+
+.quick-start li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.quick-start li strong {
+  color: var(--color-primary-text);
+  font-weight: 600;
+}
+
+.welcome-example {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(182, 160, 120, 0.1), rgba(48, 74, 57, 0.1));
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.example-icon {
+  font-size: 1.5rem;
+}
+
+.example-content {
+  font-size: 0.95rem;
+  color: var(--color-secondary-text);
+}
+
+.example-content code {
+  background: rgba(182, 160, 120, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--color-accent);
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.welcome-tips {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(48, 74, 57, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #304A39;
+}
+
+.tip-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tip-content {
+  font-size: 0.9rem;
+  color: var(--color-secondary-text);
+  line-height: 1.5;
+}
+
+.tip-content strong {
+  color: var(--color-primary-text);
+}
+
+.welcome-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-get-started {
+  flex: 1;
+  min-width: 200px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--color-accent), #667eea);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-get-started:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 242, 255, 0.4);
+}
+
+.btn-tour {
+  padding: 14px 24px;
+  background: transparent;
+  color: var(--color-secondary-text);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tour:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-accent);
+  color: var(--color-primary-text);
+}
+
+/* Light mode */
+[data-theme="light"] .welcome-card {
+  background: white;
+  box-shadow: 0 24px 60px rgba(0, 61, 153, 0.15);
+}
+
+[data-theme="light"] .welcome-section {
+  background: rgba(14, 165, 233, 0.08);
+  border-left-color: #0ea5e9;
+}
+
+[data-theme="light"] .quick-start {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+[data-theme="light"] .welcome-tips {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+[data-theme="light"] .btn-tour {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+[data-theme="light"] .btn-tour:hover {
+  border-color: #0ea5e9;
+  background: #e5e7eb;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .welcome-card {
+    padding: 24px 20px;
+    max-height: 85vh;
+  }
+
+  .welcome-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .welcome-icon {
+    font-size: 3rem;
+  }
+
+  .quick-start ol {
+    padding-left: 18px;
+  }
+
+  .quick-start li {
+    font-size: 0.9rem;
+  }
+
+  .welcome-footer {
+    flex-direction: column;
+  }
+
+  .btn-get-started,
+  .btn-tour {
+    width: 100%;
+  }
+}
+
+/* Scrollbar styling */
+.welcome-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.welcome-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.welcome-card::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.welcome-card::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}

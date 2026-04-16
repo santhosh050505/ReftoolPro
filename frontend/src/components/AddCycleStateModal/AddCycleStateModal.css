@@ -1,0 +1,13 @@
+/* Reusing modal styles from ProjectModal.css */
+.add-cycle-modal {
+  max-width: 450px;
+}
+
+.add-cycle-modal .project-form {
+  padding-top: 10px;
+}
+
+/* Ensure consistent look with other modals */
+.add-cycle-modal .form-group {
+  margin-bottom: 24px;
+}

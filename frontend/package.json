@@ -1,0 +1,37 @@
+{
+  "name": "ref-tools-pro-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Danfoss-style HVAC engineering UI (RefTools-Pro)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "node ../scripts/sync-refrigerant-data.js && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "sync-data": "node ../scripts/sync-refrigerant-data.js"
+  },
+  "dependencies": {
+    "framer-motion": "^12.29.0",
+    "lucide-react": "^0.562.0",
+    "plotly.js-dist-min": "^3.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^10.0.2",
+    "react-plotly.js": "^2.6.0",
+    "react-router-dom": "^7.13.0",
+    "react-scripts": "5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

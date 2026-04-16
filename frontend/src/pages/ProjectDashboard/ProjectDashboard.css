@@ -1,0 +1,712 @@
+.project-dashboard {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.dashboard-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashboard-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-secondary-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dashboard-back-btn:hover {
+  background: var(--color-sidebar-bg);
+  border-color: var(--color-accent);
+  color: var(--color-primary-text);
+}
+
+.dashboard-back-btn svg {
+  color: var(--color-secondary-text);
+  transition: transform 0.2s ease;
+}
+
+.dashboard-back-btn:hover svg {
+  transform: translateX(-3px);
+  color: var(--color-primary-text);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.selection-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--accent-blue);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-text:hover {
+  background: var(--accent-blue-alpha);
+}
+
+.selection-count {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.project-selection {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.selection-checkbox {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.selection-checkbox:hover {
+  color: var(--accent-blue);
+  transform: scale(1.1);
+}
+
+.project-card-header .selection-checkbox {
+  color: var(--accent-blue);
+}
+
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.project-title-input {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  margin: -4px 0 !important;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+  text-align: center;
+  background: var(--bg-secondary);
+  margin-top: 20px;
+  border-radius: 20px;
+  border: 1px dashed var(--border-color);
+}
+
+/* Projects List */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--color-accent-pine);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.project-card-header {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(to right, var(--bg-tertiary), var(--bg-secondary));
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.project-card-header:hover {
+  background: var(--color-sidebar-bg);
+}
+
+.project-info-simple {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-info-simple h3 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text-primary);
+}
+
+.project-info-simple p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+/* Table Design */
+.conditions-table-container {
+  overflow-x: auto;
+  padding: 0;
+}
+
+.conditions-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.conditions-table th {
+  background: var(--color-sidebar-bg);
+  padding: 14px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-secondary-text);
+  border-bottom: 2px solid var(--color-accent-pine);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.input-value-cell-header {
+  text-align: center;
+}
+
+.conditions-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.conditions-table tr:hover {
+  background: var(--color-sidebar-bg);
+  /* Use a more neutral sidebar-like hover */
+}
+
+.conditions-table tr:hover td,
+.conditions-table tr:hover .condition-name-cell {
+  color: var(--color-accent);
+  /* Highlight text with brand khaki on hover */
+}
+
+.conditions-table tr.active-row {
+  background: var(--color-accent-pine);
+  border-left: 4px solid var(--color-accent);
+}
+
+.conditions-table tr.active-row td,
+.conditions-table tr.active-row .condition-name-cell {
+  color: #FFFFFF !important;
+  /* Force white for maximum clarity on dark row */
+}
+
+.conditions-table tr.active-row .condition-name-cell:hover {
+  color: var(--color-accent) !important;
+}
+
+.condition-name-cell {
+  font-weight: 600;
+  color: var(--accent-blue);
+  cursor: pointer;
+  user-select: none;
+}
+
+.condition-name-cell:hover,
+.actual-temp-cell:hover {
+  text-decoration: underline;
+}
+
+.row-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-btn {
+  background: var(--bg-quaternary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn.delete-btn:hover {
+  background: var(--error-bg, #fff5f5);
+  color: var(--error-text, #e53e3e);
+  border-color: var(--error-border, #feb2b2);
+}
+
+.action-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--bg-quaternary);
+  border-color: var(--border-color);
+  color: var(--text-tertiary);
+}
+
+.inline-rename-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-input-bg);
+  color: var(--color-primary-text);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.inline-rename-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-fade), var(--shadow-input);
+  background: var(--color-card-bg);
+}
+
+.project-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background-color: var(--color-accent-fade);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.project-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Thermoplot Toggle Section */
+.thermoplot-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-card-bg);
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1.5px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 8px;
+}
+
+.thermoplot-control:hover {
+  background: var(--color-bg);
+  border-color: var(--color-accent);
+  box-shadow: var(--glow-accent);
+  transform: translateY(-1px);
+}
+
+.thermoplot-control .toggle-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  user-select: none;
+  text-shadow: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.thermoplot-control .switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 50px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.thermoplot-control .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.thermoplot-control .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-disabled-text);
+  transition: 0.3s;
+  border-radius: 26px;
+  border: 2px solid var(--color-border);
+}
+
+.thermoplot-control .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  background-color: white;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.thermoplot-control input:checked+.slider {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-fade);
+}
+
+.thermoplot-control input:checked+.slider:before {
+  transform: translateY(-50%) translateX(24px);
+}
+
+[data-theme="dark"] .slider {
+  background-color: #334155;
+}
+
+/* State Cycle Dropdown */
+.input-value-cell {
+  text-align: center;
+}
+
+.sequence-cell {
+  text-align: center;
+}
+
+.sequence-select {
+  width: 60px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+  padding-right: 28px;
+}
+
+[data-theme="light"] .sequence-select {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-border);
+  color: var(--color-primary-text);
+}
+
+.sequence-select:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px var(--accent-blue-alpha);
+}
+
+.sequence-select option:disabled {
+  color: var(--text-tertiary);
+  background: var(--bg-quaternary);
+}
+
+.add-cycle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.plot-diagram-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Light mode: active plotdiagram button gets pine teal color */
+[data-theme="light"] .plot-diagram-btn:not(.disabled) {
+  background: var(--color-accent-pine);
+  color: #FFFFFF;
+  border: 1px solid var(--color-accent-pine);
+}
+
+[data-theme="light"] .plot-diagram-btn:not(.disabled):hover {
+  background: #245038;
+  box-shadow: 0 4px 12px rgba(48, 74, 57, 0.25);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .plot-diagram-btn:not(.disabled):active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(48, 74, 57, 0.15);
+}
+
+.edit-project-btn,
+.delete-project-btn {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-project-btn:hover {
+  background: var(--accent-blue-alpha);
+  color: var(--accent-blue);
+}
+
+.delete-project-btn:hover {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+
+@media (max-width: 1024px) {
+
+  .conditions-table th,
+  .conditions-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-dashboard {
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .dashboard-header-left {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+  }
+
+  .dashboard-back-btn {
+    width: fit-content;
+    padding: 6px 12px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .project-card-header {
+    padding: 12px 16px;
+  }
+
+  .project-info-simple h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .conditions-table-container {
+    margin: 0;
+    width: 100%;
+    overflow-x: auto;
+    /* Force horizontal scroll */
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+  }
+
+  .conditions-table {
+    min-width: 600px;
+    /* Increase to ensure enough room for 5 columns without overlap */
+    table-layout: auto;
+    /* Let it grow naturally based on min-widths */
+    border-collapse: collapse;
+  }
+
+  .conditions-table th {
+    padding: 12px 8px;
+    font-size: 11px;
+    white-space: nowrap;
+    /* Prevent headers from wrapping or overlapping */
+    background: var(--bg-tertiary);
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .conditions-table td {
+    padding: 12px 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* operating condition */
+  .conditions-table th:nth-child(1) {
+    min-width: 160px;
+  }
+
+  /* Refrigerant */
+  .conditions-table th:nth-child(2) {
+    min-width: 100px;
+  }
+
+  /* Pressure */
+  .conditions-table th:nth-child(3) {
+    min-width: 110px;
+  }
+
+  /* Temperature */
+  .conditions-table th:nth-child(4) {
+    min-width: 120px;
+  }
+
+  /* Actions */
+  .conditions-table th:nth-child(5) {
+    min-width: 90px;
+  }
+
+  .row-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+  }
+
+  .action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .condition-name-cell {
+    color: var(--accent-blue);
+    font-weight: 600;
+    text-decoration: underline;
+    /* Visual cue for double-click */
+  }
+}

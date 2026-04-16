@@ -1,0 +1,7 @@
+{
+  "name": "R134a",
+  "data": [
+    { "pressure": 1, "temperature": -26.3, "enthalpy": 200, "density": 5.25, "phase": "liquid" }
+    // ...more data
+  ]
+}

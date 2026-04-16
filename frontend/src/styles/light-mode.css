@@ -1,0 +1,341 @@
+/* ==================== LIGHT MODE SPECIFIC STYLES ==================== */
+
+[data-theme="light"] .panel,
+[data-theme="light"] .card,
+[data-theme="light"] .drawer,
+[data-theme="light"] .admin-panel-redesigned,
+[data-theme="light"] .main-card {
+  background: var(--color-card-bg);
+  color: var(--color-card-text);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Override cyan text to darker blue for light mode */
+[data-theme="light"] * {
+  --color-accent-text: var(--color-accent);
+}
+
+/* Admin Dashboard Light Mode */
+[data-theme="light"] .admin-dashboard {
+  background: var(--color-bg);
+}
+
+[data-theme="light"] .admin-section {
+  background: var(--color-card-bg);
+  color: var(--color-primary-text);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .admin-section h2 {
+  color: var(--color-accent);
+  border-bottom: 3px solid var(--color-accent);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="light"] .admin-section h3 {
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+[data-theme="light"] .admin-form-group {
+  margin-bottom: 1rem;
+}
+
+[data-theme="light"] .admin-form-group label {
+  color: var(--color-primary-text);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 0.95rem;
+}
+
+[data-theme="light"] .admin-form-group input,
+[data-theme="light"] .admin-form-group select,
+[data-theme="light"] .admin-form-group textarea {
+  background: var(--color-input-bg);
+  color: var(--color-primary-text);
+  border: 2px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+[data-theme="light"] .admin-form-group input:focus,
+[data-theme="light"] .admin-form-group select:focus,
+[data-theme="light"] .admin-form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent-fade);
+  background: var(--color-card-bg);
+}
+
+/* Table Light Mode */
+[data-theme="light"] table {
+  background: var(--color-card-bg);
+  color: var(--color-primary-text);
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid var(--color-border);
+}
+
+[data-theme="light"] table th {
+  background: var(--color-digital-bg);
+  color: var(--color-accent);
+  padding: 1.2rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 3px solid var(--color-accent);
+  font-size: 0.95rem;
+}
+
+[data-theme="light"] table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 2px solid var(--color-border);
+  color: var(--color-primary-text);
+  font-weight: 500;
+}
+
+[data-theme="light"] table tr:hover {
+  background: var(--color-digital-bg);
+}
+
+/* Modal/Dialog Light Mode */
+[data-theme="light"] .modal,
+[data-theme="light"] .dialog,
+[data-theme="light"] .modal-content {
+  background: var(--color-card-bg);
+  color: var(--color-primary-text);
+  border: 2px solid var(--color-border);
+}
+
+[data-theme="light"] .modal-header,
+[data-theme="light"] .dialog-header {
+  background: var(--color-digital-bg);
+  color: var(--color-accent);
+  border-bottom: 3px solid var(--color-accent);
+  padding: 1.5rem;
+}
+
+[data-theme="light"] .modal-header h2,
+[data-theme="light"] .dialog-header h3 {
+  color: var(--color-accent) !important;
+  font-weight: 800;
+}
+
+/* Drawer Light Mode */
+[data-theme="light"] .drawer {
+  background: var(--color-card-bg);
+  color: var(--color-primary-text);
+  border-left: 3px solid var(--color-accent);
+  box-shadow: -2px 0 var(--shadow-md);
+}
+
+/* Message/Alert Light Mode - Fix Visibility */
+[data-theme="light"] .alert,
+[data-theme="light"] .message,
+[data-theme="light"] .page-alert {
+  background: var(--color-digital-bg);
+  border-left: 4px solid var(--color-accent);
+  color: #E8DFD0;
+  /* Light Khaki text on Pine Teal bg */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+[data-theme="light"] .alert-error {
+  border-left-color: var(--color-error);
+}
+
+[data-theme="light"] .alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+[data-theme="light"] .alert-success {
+  border-left-color: var(--color-success);
+}
+
+/* Badge Light Mode */
+[data-theme="light"] .badge,
+[data-theme="light"] [class*="badge"] {
+  background: var(--color-accent-fade);
+  color: var(--color-accent);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid var(--color-accent);
+}
+
+/* List Light Mode */
+[data-theme="light"] .list-item,
+[data-theme="light"] [class*="list-item"] {
+  background: var(--color-card-bg);
+  color: var(--color-primary-text);
+  border: 2px solid var(--color-border);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+[data-theme="light"] .list-item:hover {
+  background: var(--color-digital-bg);
+  border-color: var(--color-accent);
+}
+
+/* Scrollbar Light Mode */
+[data-theme="light"] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--color-digital-bg);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Enhanced Light Mode Card Styling */
+[data-theme="light"] [class*="card-item"],
+[data-theme="light"] [class*="section-item"] {
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 0.6rem;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] [class*="card-item"]:hover,
+[data-theme="light"] [class*="section-item"]:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent-fade);
+}
+
+/* Light Mode Input/Control Styling */
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] input[type="email"],
+[data-theme="light"] input[type="password"],
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  border: 2px solid var(--color-border);
+  background: var(--color-input-bg);
+  color: var(--color-primary-text);
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: var(--color-primary-text);
+  opacity: 0.6;
+}
+
+/* Light Mode Button Enhancement */
+[data-theme="light"] button {
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] button:not(.header-btn) {
+  border: 2px solid var(--color-border);
+}
+
+[data-theme="light"] button:not(.header-btn):not(.help-icon-btn-inline) {
+  border: 2px solid var(--color-border);
+}
+
+
+[data-theme="light"] [class*="info-box"],
+[data-theme="light"] [class*="details-box"] {
+  background: var(--color-digital-bg);
+  border-left: 4px solid var(--color-accent);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #E8DFD0;
+}
+
+/* ==================== PROJECT DASHBOARD LIGHT MODE FIXES ==================== */
+[data-theme="light"] .project-card,
+[data-theme="light"] .calculation-card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .project-card:hover,
+[data-theme="light"] .calculation-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .project-details h3,
+[data-theme="light"] .calculation-header h4 {
+  color: var(--color-primary-text);
+}
+
+[data-theme="light"] .project-description,
+[data-theme="light"] .project-meta {
+  color: var(--color-secondary-text);
+}
+
+[data-theme="light"] .calc-row .label {
+  color: var(--color-secondary-text);
+}
+
+[data-theme="light"] .calc-row .value {
+  color: var(--color-primary-text);
+}
+
+
+[data-theme="light"] .empty-state {
+  background: var(--color-sidebar-bg);
+  border-color: var(--color-border);
+}
+
+[data-theme="light"] .empty-state h2 {
+  color: var(--color-primary-text);
+}
+
+[data-theme="light"] .empty-state p {
+  color: var(--color-secondary-text);
+}
+
+/* Pine Teal for Add operating condition button in Light Mode */
+[data-theme="light"] .add-cycle-btn {
+  background: #304A39 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(48, 74, 57, 0.2) !important;
+}
+
+[data-theme="light"] .add-cycle-btn:hover {
+  background: #213831 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(48, 74, 57, 0.3) !important;
+}

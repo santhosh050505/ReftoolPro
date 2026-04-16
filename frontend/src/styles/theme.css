@@ -1,0 +1,264 @@
+:root,
+[data-theme="dark"] {
+  /* Background Colors - Exclusive Khaki & Pine Palette */
+  --color-bg: #1F2926;
+  --color-sidebar-bg: #263432;
+  --color-card-bg: #2B3A36;
+  --color-card-bg-muted: #243230;
+  --color-digital-bg: #182420;
+  --color-switch-bg: #304A39;
+  --color-input-bg: #1F2926;
+  --color-border: #3A4F47;
+  --color-border-accent: #B6A078;
+
+  /* Text Colors - Khaki & Pine Gradient */
+  --color-sidebar-text: #D9CFC3;
+  --color-card-text: #E8DECD;
+  --color-digital-text: #C9B598;
+  --color-primary-text: #E8DECD;
+  --color-secondary-text: #A9956A;
+  --color-placeholder-text: #5A6B63;
+  --color-label: #A9956A;
+  --color-value-primary: #E8DECD;
+  --color-value-secondary: #B6A078;
+  --color-helper: #9A856F;
+  --color-heading: #D9CFC3;
+  --color-disabled-text: #6B7A70;
+  --color-disabled-bg: #1F2926;
+
+  /* Accent Colors */
+  --color-accent: #B6A078;
+  --color-accent-pine: #304A39;
+  --color-accent-fade: rgba(182, 160, 120, 0.08);
+  --color-accent-hover: #CDB89A;
+  --color-accent-warm: #B6A078;
+
+  /* State Colors */
+  --color-warning: #B6A078;
+  --color-error: #9A7D6E;
+  --color-success: #5A6B63;
+
+  /* Button Colors */
+  --color-btn-primary: #B6A078;
+  --color-btn-primary-text: #1F2926;
+  --color-btn-secondary: #304A39;
+  --color-btn-secondary-text: #D9CFC3;
+
+  /* Shadows and Effects - Premium Depth */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6);
+  --shadow-input: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  --glow-accent: 0 0 12px rgba(182, 160, 120, 0.2);
+  --glow-accent-strong: 0 0 24px rgba(48, 74, 57, 0.3);
+
+  /* Border Radius Tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 24px;
+
+  /* Spacing Tokens */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Font Weight Tokens */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ==================== COMPATIBILITY ALIASES ==================== */
+  --bg-primary: var(--color-bg);
+  --bg-secondary: var(--color-card-bg);
+  --bg-tertiary: var(--color-sidebar-bg);
+  --bg-quaternary: var(--color-switch-bg);
+
+  --text-primary: var(--color-primary-text);
+  --text-secondary: var(--color-secondary-text);
+  --text-tertiary: var(--color-disabled-text);
+
+  --border-color: var(--color-border);
+  --accent-blue: var(--color-accent);
+  --accent-blue-alpha: var(--color-accent-fade);
+  --error-bg: rgba(239, 68, 68, 0.1);
+  --error-text: var(--color-error);
+  --success-color: var(--color-success);
+
+  /* HEADER BUTTON GRADIENTS - SIGNATURE DESIGN */
+  --header-logout-bg: var(--color-btn-primary);
+  --header-logout-shadow: var(--shadow-sm);
+  --header-logout-text: var(--color-btn-primary-text);
+
+  --header-home-bg: var(--color-sidebar-bg);
+  --header-home-shadow: var(--shadow-sm);
+  --header-home-text: var(--color-primary-text);
+
+  --header-projects-bg: var(--color-accent-pine);
+  --header-projects-shadow: var(--shadow-sm);
+  --header-projects-text: var(--color-primary-text);
+
+  --header-save-bg: var(--color-accent);
+  --header-save-shadow: var(--shadow-sm);
+  --header-save-text: var(--color-bg);
+}
+
+/* ==================== LIGHT MODE ==================== */
+[data-theme="light"] {
+  /* Background Colors - Khaki Cream Base */
+  --color-bg: #F3EFE9;
+  --color-sidebar-bg: #EDE6DC;
+  --color-card-bg: #E7DFD2;
+  --color-card-bg-muted: #DED4C4;
+  --color-digital-bg: #304A39;
+  --color-switch-bg: #D9CFC3;
+  --color-input-bg: #FDFCF9;
+  --color-border: #C9B598;
+  --color-border-accent: #B6A078;
+
+  /* Text Colors - Pine Dark Base */
+  --color-sidebar-text: #B6A078;
+  --color-card-text: #1A1A1A;
+  --color-digital-text: #D9CFC3;
+  --color-primary-text: #1A1A1A;
+  --color-secondary-text: #6B6B6B;
+  --color-label: #6B6B6B;
+  --color-value-primary: #304A39;
+  --color-value-secondary: #B6A078;
+  --color-helper: #8A8A8A;
+  --color-heading: #304A39;
+  --color-disabled-text: #A9956A;
+  --color-disabled-bg: #F3EFE9;
+
+  /* Accent Colors */
+  --color-accent: #B6A078;
+  --color-accent-pine: #304A39;
+  --color-accent-fade: rgba(48, 74, 57, 0.06);
+  --color-accent-hover: #4A5F54;
+  --color-accent-warm: #D9CFC3;
+  --color-warning: #B6A078;
+  --color-error: #8B6F60;
+  --color-success: #304A39;
+
+  /* Button Colors */
+  --color-btn-primary: #304A39;
+  --color-btn-primary-text: #FFFFFF;
+  --color-btn-secondary: transparent;
+  --color-btn-secondary-text: #B6A078;
+
+  /* Shadows and Effects - Soft & Refined */
+  --shadow-sm: 0 2px 8px rgba(48, 74, 57, 0.06);
+  --shadow-md: 0 8px 24px rgba(48, 74, 57, 0.08);
+  --shadow-lg: 0 16px 48px rgba(48, 74, 57, 0.10);
+}
+
+/* ==================== GLOBAL STYLES ==================== */
+body {
+  background: var(--color-bg);
+  color: var(--color-card-text);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ✨ IMPROVED: Input Field Enhancements */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-input);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-fade), var(--shadow-input);
+}
+
+/* ✨ NEW: WCAG-Compliant Placeholder Styles */
+::-webkit-input-placeholder {
+  color: var(--color-placeholder-text);
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  color: var(--color-placeholder-text);
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: var(--color-placeholder-text);
+  opacity: 1;
+}
+
+::placeholder {
+  color: var(--color-placeholder-text);
+  opacity: 1;
+}
+
+/* Smooth transitions on theme switch */
+.theme-transition * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ==================== CUSTOM SCROLLBAR STYLING ==================== */
+
+/* === WEBKIT BROWSERS (Chrome, Edge, Safari) === */
+::-webkit-scrollbar {
+  width: 10px;
+  /* Width of vertical scrollbar */
+  height: 10px;
+  /* Height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+  /* Dark background matching app */
+  border-radius: 10px;
+  /* Rounded track */
+  margin: 4px 0;
+  /* Spacing from edges */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-pine);
+  border-radius: 10px;
+  border: 3px solid var(--color-bg);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+  border: 2px solid var(--color-card-bg);
+  box-shadow: 0 0 12px var(--color-accent-fade);
+}
+
+/* === FIREFOX === */
+* {
+  scrollbar-width: thin;
+  /* Thin scrollbar */
+  scrollbar-color: #B6A078 var(--color-bg);
+  /* Thumb color | Track color */
+}
+
+/* === LIGHT MODE SCROLLBAR === */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #E8E0D4;
+}

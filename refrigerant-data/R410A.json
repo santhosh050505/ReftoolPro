@@ -1,0 +1,7 @@
+{
+  "name": "R410A",
+  "data": [
+    { "pressure": 1, "temperature": -51.6, "enthalpy": 170, "density": 4.80, "phase": "liquid" }
+    // ...more data
+  ]
+}

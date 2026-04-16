@@ -1,0 +1,186 @@
+/* ==================== BUTTON PATTERNS ==================== */
+
+/* Rotating Icon Animation (for loading states) */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
+/* ==================== BUTTON HOVER PATTERNS ==================== */
+
+/* Pattern A: Primary Action Buttons */
+.btn-primary,
+.btn-save-admin,
+.admin-btn-add,
+.submit-button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* ✅ Optimized */
+}
+
+.btn-primary:hover,
+.btn-save-admin:hover,
+.admin-btn-add:hover,
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-accent);
+  /* ✨ IMPROVED: Softer glow (was rgba(0, 242, 255, 0.3)) */
+}
+
+.btn-primary:active,
+.btn-save-admin:active,
+.admin-btn-add:active,
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Pattern B: Icon-Only Utility Buttons */
+.header-btn,
+.drawer-close,
+.settings-close,
+.alert-close {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  /* ✅ Optimized */
+}
+
+.header-btn:hover {
+  background: var(--color-accent-fade);
+  transform: scale(1.05);
+}
+
+.header-btn:active {
+  transform: scale(0.95);
+}
+
+.drawer-close:hover,
+.settings-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.alert-close:hover {
+  transform: scale(1.2);
+}
+
+.alert-close:active,
+.drawer-close:active,
+.settings-close:active {
+  transform: scale(0.9);
+}
+
+/* Pattern C: Destructive Action Buttons */
+.btn-danger,
+.admin-btn-small.delete,
+.btn-cancel-admin {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  /* ✅ Optimized */
+}
+
+.btn-danger:hover {
+  background: #8B6F60;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 111, 96, 0.4);
+}
+
+.btn-danger:active {
+  transform: translateY(0);
+}
+
+.admin-btn-small.delete:hover {
+  background: rgba(139, 111, 96, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-cancel-admin:hover {
+  background: rgba(139, 111, 96, 0.1);
+  border-color: #8B6F60;
+}
+
+/* Pattern D: Secondary/Cancel Buttons */
+.btn-secondary,
+.btn-cancel-admin,
+.adminbtn-cancel {
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  /* ✅ Optimized */
+}
+
+.btn-secondary:hover,
+.admin-btn-cancel:not(.btn-cancel-admin):hover {
+  background: rgba(100, 100, 150, 0.4);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active,
+.admin-btn-cancel:active {
+  transform: translateY(0);
+}
+
+/* Pattern E: Refresh & Utility Buttons */
+.admin-btn-refresh {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  /* ✅ Optimized */
+}
+
+.admin-btn-refresh:hover:not(:disabled) {
+  background: var(--color-accent-fade);
+  transform: translateY(-1px);
+}
+
+.admin-btn-refresh:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.admin-btn-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Pattern F: Edit Buttons */
+.admin-btn-small.edit:hover {
+  background: var(--color-accent-fade);
+  transform: translateY(-1px);
+}
+
+/* ==================== DISABLED STATES ==================== */
+
+button:disabled,
+button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+button:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ==================== FOCUS STATES (Accessibility) ==================== */
+
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ==================== LIGHT MODE OVERRIDES ==================== */
+
+[data-theme="light"] .header-btn:hover {
+  background: var(--color-accent-fade);
+}
+
+[data-theme="light"] .btn-cancel-admin:hover {
+  background: rgba(139, 111, 96, 0.05);
+}
+
+[data-theme="light"] .admin-btn-refresh:hover:not(:disabled) {
+  background: var(--color-accent-fade);
+}

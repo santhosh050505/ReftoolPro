@@ -1,0 +1,463 @@
+/* ============================================
+   REFRIGERANT INFO PANEL - PROFESSIONAL LAYOUT
+   Clean, flat design with clear hierarchy
+   Danfoss-style: Clarity, alignment, readability
+   ============================================ */
+
+.refrigerant-info-outer {
+  background: var(--color-card-bg);
+  color: var(--color-card-text);
+  border-radius: 12px;
+  border: 2px solid var(--color-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: calc(100vh - 104px);
+}
+
+.refrigerant-info-scroll {
+  overflow-y: auto;
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 61, 153, 0.3) transparent;
+}
+
+.refrigerant-info-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.refrigerant-info-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.refrigerant-info-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 61, 153, 0.3);
+  border-radius: 3px;
+}
+
+.refrigerant-info-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 61, 153, 0.5);
+}
+
+/* ============================================
+   SKELETON LOADER - Premium Loading State
+   ============================================ */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-pulse {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.1) 37%,
+      rgba(255, 255, 255, 0.05) 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+[data-theme="light"] .skeleton-pulse {
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.05) 25%,
+      rgba(0, 0, 0, 0.1) 37%,
+      rgba(0, 0, 0, 0.05) 63%);
+}
+
+.skeleton-card {
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(35, 40, 55, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+[data-theme="light"] .skeleton-card {
+  background: #ffffff;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 40%;
+  margin-bottom: 8px;
+}
+
+.skeleton-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+}
+
+.skeleton-label {
+  height: 14px;
+  width: 30%;
+}
+
+.skeleton-value {
+  height: 14px;
+  width: 20%;
+}
+
+.skeleton-summary-card {
+  /* Match quick-summary-card without shadow */
+  border-radius: 8px;
+  border: 2px solid var(--color-accent);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: rgba(35, 40, 55, 0.3);
+  /* Slightly different bg for skeleton */
+}
+
+/* ============================================
+   QUICK SUMMARY CARD - Highlighted at top
+   ============================================ */
+.quick-summary-card {
+  background: var(--color-sidebar-bg);
+  border-radius: 8px;
+  border: 2px solid var(--color-accent);
+  /* box-shadow removed per audit */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+[data-theme="light"] .quick-summary-card {
+  background: var(--color-sidebar-bg);
+  border: 2px solid var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+[data-theme="light"] .summary-title {
+  color: var(--color-accent);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-item .summary-label {
+  font-size: 12px;
+  color: var(--color-helper);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+[data-theme="light"] .summary-item .summary-label {
+  color: var(--color-label);
+  font-weight: 600;
+}
+
+.summary-item .summary-value {
+  font-size: 15px;
+  color: var(--color-value-primary);
+  font-weight: 600;
+}
+
+[data-theme="light"] .summary-item .summary-value {
+  color: var(--color-value-primary);
+  font-weight: 700;
+}
+
+/* ============================================
+   SECTIONS - Clean, flat design
+   ============================================ */
+/* ============================================
+   SECTIONS - Clean, flat design
+   ============================================ */
+/* ============================================
+   SECTIONS - Clean, flat design 
+   ============================================ */
+.section {
+  background: var(--color-card-bg-muted);
+  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  border-left-width: 3px;
+  /* ✅ Match width of accented sections */
+  padding: 16px;
+  /* ✅ Standardized to 16px */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* ✅ Increased gap for better rhythm */
+}
+
+[data-theme="light"] .section {
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border);
+  border-left-width: 3px;
+  /* ✅ Match width of accented sections */
+}
+
+.section-title {
+  font-size: 13px;
+  color: var(--color-heading);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  /* ✅ Title Case as requested */
+  padding-bottom: 8px;
+  position: relative;
+  /* ✅ For pseudo-element underline */
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-heading);
+  opacity: 1;
+  /* Match border opacity */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+[data-theme="light"] .section-title {
+  color: var(--color-heading);
+}
+
+[data-theme="light"] .section-title::after {
+  background: var(--color-heading);
+}
+
+/* ============================================
+   INFO GRID - flexible layout
+   ============================================ */
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  /* Let rows handle padding */
+}
+
+.info-row {
+  display: flex;
+  /* ✅ Changed to flex for better control */
+  justify-content: space-between;
+  align-items: baseline;
+  /* ✅ Align text baselines */
+  gap: 16px;
+  font-size: 14px;
+  padding: 8px 0;
+  /* ✅ Better vertical spacing */
+  border-bottom: 1px solid transparent;
+  /* Placeholder for potential dividers */
+}
+
+.info-label {
+  color: var(--color-label);
+  font-weight: 500;
+  font-size: 13px;
+  text-align: left;
+  flex-shrink: 0;
+  /* ✅ Prevent label from shrinking */
+}
+
+[data-theme="light"] .info-label {
+  color: var(--color-label);
+  font-weight: 600;
+}
+
+.info-value {
+  color: var(--color-value-primary);
+  font-weight: 600;
+  font-size: 14px;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 80px;
+  /* Reduced from 120px to prevent squashing */
+  font-variant-numeric: tabular-nums;
+  /* ✅ Ensure decimals align vertically */
+}
+
+/* Units styling - subtle and aligned inline */
+.unit {
+  font-size: 12px;
+  color: var(--color-value-secondary);
+  /* ✅ Dual-tone: Cyan unit per audit */
+  font-weight: 500;
+  margin-left: 2px;
+  opacity: 0.8;
+  /* Subtle blend */
+}
+
+[data-theme="light"] .unit {
+  color: var(--color-value-secondary);
+  font-weight: 600;
+}
+
+/* ============================================
+   SECTION-SPECIFIC STYLING
+   ============================================ */
+.chemical-section {
+  background: var(--color-card-bg-muted);
+  border-left: 3px solid var(--color-heading);
+}
+
+[data-theme="light"] .chemical-section {
+  background: var(--color-card-bg);
+  border-left: 3px solid var(--color-heading);
+}
+
+.technical-section {
+  background: var(--color-card-bg-muted);
+}
+
+[data-theme="light"] .technical-section {
+  background: var(--color-card-bg);
+}
+
+.safety-section {
+  background: var(--color-card-bg-muted);
+}
+
+[data-theme="light"] .safety-section {
+  background: var(--color-card-bg);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1199px) {
+  .refrigerant-info-outer {
+    max-height: calc(100vh - 100px);
+  }
+
+  .refrigerant-info-scroll {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .quick-summary-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .summary-grid {
+    gap: 10px;
+  }
+
+  .section {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .info-row {
+    gap: 10px;
+    padding: 5px 0;
+  }
+}
+
+/* Tablet/Mobile & Split Screen: info box without scrolling, content flows naturally */
+@media (max-width: 1024px) {
+  .refrigerant-info-outer {
+    max-height: none;
+    border-radius: 8px;
+    overflow: visible;
+  }
+
+  .refrigerant-info-scroll {
+    padding: 12px;
+    gap: 12px;
+    max-height: none;
+    overflow: visible;
+    flex: unset;
+  }
+
+  .quick-summary-card {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .summary-title {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .info-row {
+    gap: 8px;
+    padding: 4px 0;
+  }
+
+  .info-label {
+    font-size: 12px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+}
+
+/* ✅ Mobile Deep: Stack rows for better readability per audit */
+@media (max-width: 480px) {
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .info-value {
+    text-align: left;
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+    /* Allow full width */
+    padding-left: 0;
+  }
+
+  .info-label {
+    color: #94a3b8cc;
+    /* Slightly lighter on dark mode for hierarchy */
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}

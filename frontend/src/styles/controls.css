@@ -1,0 +1,230 @@
+.value-box {
+  background: var(--color-digital-bg);
+  color: var(--color-digital-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm), 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 1.2rem 1.5rem;
+  text-align: center;
+  font-family: 'Outfit', 'Orbitron', monospace;
+  margin-bottom: 0.5rem;
+  border: 1.5px solid var(--color-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.value-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-accent), transparent);
+  opacity: 0.3;
+}
+
+.value-box-label {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  color: var(--color-secondary-text);
+}
+
+.value-box-value {
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.value-box-unit {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  color: var(--color-primary-text);
+}
+
+.switch {
+  width: 52px;
+  height: 28px;
+  background: var(--color-switch-bg);
+  border-radius: 100px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-input);
+  border: 1.5px solid var(--color-border);
+}
+
+.switch.on {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.switch.on .slider {
+  left: 26px;
+}
+
+.dropdown {
+  position: relative;
+  width: 180px;
+  font-family: inherit;
+}
+
+.dropdown-selected {
+  background: var(--color-card-bg);
+  color: var(--color-card-text);
+  border-radius: 0.5rem;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.dropdown-selected:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-fade);
+}
+
+.dropdown-arrow {
+  margin-left: 1rem;
+  color: var(--color-accent);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: var(--color-card-bg);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  z-index: 10;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: var(--color-card-text);
+}
+
+.dropdown-item:hover {
+  background: var(--color-accent-fade);
+  color: var(--color-accent);
+}
+
+.keypad {
+  background: var(--color-card-bg);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  width: 220px;
+  margin: 0 auto;
+}
+
+.keypad-display {
+  background: var(--color-digital-bg);
+  color: var(--color-digital-text);
+  font-family: 'Orbitron', monospace, sans-serif;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  text-align: right;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.keypad-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.keypad-key {
+  background: var(--color-switch-bg);
+  color: var(--color-card-text);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  padding: 0.7rem 0;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s;
+  font-weight: 500;
+}
+
+.keypad-key:hover {
+  background: var(--color-accent-fade);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-fade);
+}
+
+.keypad-key:active {
+  transform: scale(0.95);
+}
+
+/* Input field styling */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  background: var(--color-input-bg);
+  color: var(--color-primary-text);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.7rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-fade);
+}
+
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-secondary-text);
+  opacity: 0.7;
+}
+
+/* Button styling */
+button {
+  transition: all 0.2s ease;
+}
