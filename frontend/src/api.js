@@ -101,6 +101,15 @@ export const getRefrigerantRanges = async (refrigerant) => {
 // Backward compatibility
 export const fetchRefrigerantData = getRefrigerantList;
 
+// Helper to get auth headers
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('userToken');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+};
+
 // ==================== ADMIN CRUD OPERATIONS ====================
 
 /**
@@ -108,7 +117,9 @@ export const fetchRefrigerantData = getRefrigerantList;
  */
 export const getAllRefrigerants = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/refrigerant/admin/all`);
+    const response = await fetch(`${API_BASE_URL}/refrigerant/admin/all`, {
+      headers: getAuthHeaders()
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -117,11 +128,9 @@ export const getAllRefrigerants = async () => {
     const data = await response.json();
 
     // The backend returns { success, count, refrigerants }
-    // Extract the refrigerants array
     if (data.refrigerants && Array.isArray(data.refrigerants)) {
       return data.refrigerants;
     } else if (Array.isArray(data)) {
-      // Fallback if response is already an array
       return data;
     } else {
       console.warn('Unexpected response format from getAllRefrigerants:', data);
@@ -140,9 +149,7 @@ export const addNewRefrigerant = async (refrigerantData) => {
   try {
     const response = await fetch(`${API_BASE_URL}/refrigerant/admin/add`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(refrigerantData)
     });
 
@@ -164,9 +171,7 @@ export const updateExistingRefrigerant = async (name, updates) => {
   try {
     const response = await fetch(`${API_BASE_URL}/refrigerant/admin/update/${encodeURIComponent(name)}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(updates)
     });
 
@@ -188,9 +193,7 @@ export const deleteExistingRefrigerant = async (name) => {
   try {
     const response = await fetch(`${API_BASE_URL}/refrigerant/admin/delete/${encodeURIComponent(name)}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      headers: getAuthHeaders()
     });
 
     if (!response.ok) {

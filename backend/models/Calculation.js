@@ -1,8 +1,13 @@
 // backend/models/Calculation.js — Supabase version
-const supabase = require('../config/supabase');
+const getClient = () => {
+  const sb = require('../config/supabase');
+  if (!sb) throw new Error('Database not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env');
+  return sb;
+};
 
 const Calculation = {
   async create(data) {
+    const supabase = getClient();
     const { data: row, error } = await supabase
       .from('calculations')
       .insert({ ...data, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
@@ -13,6 +18,7 @@ const Calculation = {
   },
 
   async find({ projectId, userId }) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('calculations')
       .select('*')
@@ -24,6 +30,7 @@ const Calculation = {
   },
 
   async findOne(filter) {
+    const supabase = getClient();
     let query = supabase.from('calculations').select('*');
     if (filter.id) query = query.eq('id', filter.id);
     if (filter.userId) query = query.eq('user_id', filter.userId);
@@ -37,6 +44,7 @@ const Calculation = {
   },
 
   async count({ projectId, userId }) {
+    const supabase = getClient();
     const { count, error } = await supabase
       .from('calculations')
       .select('*', { count: 'exact', head: true })
@@ -47,6 +55,7 @@ const Calculation = {
   },
 
   async findLast({ projectId, userId }) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('calculations')
       .select('order')
@@ -60,6 +69,7 @@ const Calculation = {
   },
 
   async findByIdAndUpdate(id, userId, updates) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('calculations')
       .update({ ...updates, updated_at: new Date().toISOString() })
@@ -72,6 +82,7 @@ const Calculation = {
   },
 
   async findByIdAndDelete(id, userId) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('calculations')
       .delete()
@@ -84,6 +95,7 @@ const Calculation = {
   },
 
   async deleteMany({ projectId, userId }) {
+    const supabase = getClient();
     const { error } = await supabase
       .from('calculations')
       .delete()
@@ -93,11 +105,13 @@ const Calculation = {
   },
 
   async insertMany(rows) {
+    const supabase = getClient();
     const { error } = await supabase.from('calculations').insert(rows);
     if (error) throw new Error(error.message);
   },
 
   async bulkUpdate(updates, userId) {
+    const supabase = getClient();
     const results = await Promise.all(
       updates.map(({ id, data }) =>
         supabase

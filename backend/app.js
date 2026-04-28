@@ -15,19 +15,23 @@ const r454bRoutes = require('./routes/r454bRoutes');
 const app = express();
 
 // Middleware
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',');
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map(o => o.trim());
 
 app.use(cors({
   origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
+    
+    // Always allow localhost in development
+    if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
       callback(null, true);
     } else {
-      if (process.env.NODE_ENV === 'production') {
-        callback(new Error('CORS not allowed'));
-      } else {
-        callback(null, true);
-      }
+      console.warn(`⚠️ CORS blocked for origin: ${origin}`);
+      callback(new Error('CORS not allowed'));
     }
   },
   credentials: true,

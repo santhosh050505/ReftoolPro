@@ -1,43 +1,65 @@
 // backend/config/database.js
-// Replaced MongoDB/Mongoose with Supabase.
-// Supabase uses HTTP — no persistent TCP connection needed.
-// This file now simply verifies the Supabase connection on startup.
-
-const supabase = require('./supabase');
+// Supabase connection check on startup.
+// Non-fatal when credentials are missing (local dev without Supabase).
 
 const connectDB = async () => {
+  const supabase = require('./supabase');
+
+  if (!supabase) {
+    console.warn('⚠️  Supabase not configured. Running in LOCAL mode.');
+    console.warn('   Auth, projects, history routes will not work until Supabase is set up.');
+    console.warn('   All refrigerant calculation routes work normally via Danfoss API.');
+    return; // Allow server to start
+  }
+
   try {
-    // Lightweight ping: list tables (returns empty on new project, still succeeds)
     const { error } = await supabase.from('users').select('id').limit(1);
     if (error && error.code !== 'PGRST116') {
-      // PGRST116 = table not found (OK if tables not yet created)
       throw new Error(error.message);
     }
     console.log('✅ Supabase Connected Successfully');
 
     // Create default admin if env flag is set
-    if (process.env.INITIALIZE_DEFAULT_ADMIN === 'true') {
+    const shouldInitAdmin = String(process.env.INITIALIZE_DEFAULT_ADMIN) === 'true';
+    
+    if (shouldInitAdmin) {
       const bcrypt = require('bcryptjs');
       const adminUser = process.env.DEFAULT_ADMIN_USER || 'Vectarc';
       const adminPass = process.env.DEFAULT_ADMIN_PASSWORD;
 
-      if (adminPass) {
-        const { data: existing } = await supabase
+      if (!adminPass) {
+        console.warn('⚠️  DEFAULT_ADMIN_PASSWORD not set. Skipping admin creation.');
+      } else {
+        const { data: existing, error: findError } = await supabase
           .from('admins')
           .select('id')
           .eq('username', adminUser)
-          .single();
+          .maybeSingle();
 
         if (!existing) {
           const hashed = await bcrypt.hash(adminPass, 10);
-          await supabase.from('admins').insert({ username: adminUser, password: hashed, role: 'admin' });
-          console.log('✅ Default Admin Created');
+          const { error: insertError } = await supabase
+            .from('admins')
+            .insert({ username: adminUser, password: hashed, role: 'admin' });
+          
+          if (insertError) {
+            console.error('❌ Failed to create default admin:', insertError.message);
+          } else {
+            console.log('✅ Default Admin Created Successfully');
+          }
+        } else {
+          console.log('ℹ️  Admin user already exists. Skipping creation.');
         }
       }
     }
   } catch (error) {
+    // Non-fatal in dev — log and continue
     console.error('❌ Supabase Connection Error:', error.message);
-    process.exit(1);
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    } else {
+      console.warn('⚠️  Continuing in dev mode without database. Fix SUPABASE_URL to enable auth.');
+    }
   }
 };
 

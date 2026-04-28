@@ -1,8 +1,13 @@
 // backend/models/Project.js — Supabase version
-const supabase = require('../config/supabase');
+const getClient = () => {
+  const sb = require('../config/supabase');
+  if (!sb) throw new Error('Database not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env');
+  return sb;
+};
 
 const Project = {
   async create(data) {
+    const supabase = getClient();
     const { data: row, error } = await supabase
       .from('projects')
       .insert({ ...data, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
@@ -13,6 +18,7 @@ const Project = {
   },
 
   async find({ userId }) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('projects')
       .select('*')
@@ -23,15 +29,17 @@ const Project = {
   },
 
   async findOne({ id, userId }) {
-    const query = supabase.from('projects').select('*');
-    if (id) query.eq('id', id);
-    if (userId) query.eq('user_id', userId);
+    const supabase = getClient();
+    let query = supabase.from('projects').select('*');
+    if (id) query = query.eq('id', id);
+    if (userId) query = query.eq('user_id', userId);
     const { data, error } = await query.single();
     if (error || !data) return null;
     return data;
   },
 
   async findByIdAndUpdate(id, userId, updates) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('projects')
       .update({ ...updates, updated_at: new Date().toISOString() })
@@ -44,6 +52,7 @@ const Project = {
   },
 
   async findByNamePattern(userId, pattern) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('projects')
       .select('id, name')
@@ -54,6 +63,7 @@ const Project = {
   },
 
   async deleteOne(id, userId) {
+    const supabase = getClient();
     const { error } = await supabase
       .from('projects')
       .delete()

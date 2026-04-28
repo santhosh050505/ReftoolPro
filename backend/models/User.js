@@ -1,9 +1,15 @@
 // backend/models/User.js — Supabase version
 const bcrypt = require('bcryptjs');
-const supabase = require('../config/supabase');
+
+const getClient = () => {
+  const sb = require('../config/supabase');
+  if (!sb) throw new Error('Database not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env');
+  return sb;
+};
 
 const User = {
   async findOne({ username }) {
+    const supabase = getClient();
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -14,6 +20,7 @@ const User = {
   },
 
   async create({ username, password }) {
+    const supabase = getClient();
     const hashed = await bcrypt.hash(password, 10);
     const { data, error } = await supabase
       .from('users')
