@@ -4,7 +4,7 @@ const path = require('path');
 
 class JsonFileService {
   constructor() {
-    this.jsonFilePath = path.join(__dirname, '../../frontend/refrigerant-data/refrigerant-properties.json');
+    this.jsonFilePath = path.join(__dirname, '../data/refrigerant-properties.json');
     this.backupPath = path.join(__dirname, '../data/refrigerants-backup.json');
   }
 

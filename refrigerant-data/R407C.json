@@ -1,7 +1,0 @@
-{
-  "name": "R407C",
-  "data": [
-    { "pressure": 1, "temperature": -43.6, "enthalpy": 190, "density": 5.10, "phase": "liquid" }
-    // ...more data
-  ]
-}

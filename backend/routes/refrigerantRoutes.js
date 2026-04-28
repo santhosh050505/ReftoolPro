@@ -21,16 +21,18 @@ router.get('/list', refrigerantController.list);
 // Get range data for a specific refrigerant
 router.get('/ranges/:refrigerant', refrigerantController.getRanges);
 
+const auth = require('../middleware/auth');
+
 // Admin: Get all refrigerants from CSV
-router.get('/admin/all', refrigerantController.getAllRefrigerants);
+router.get('/admin/all', auth.verifyAdmin, refrigerantController.getAllRefrigerants);
 
 // Admin: Add new refrigerant to CSV
-router.post('/admin/add', refrigerantController.addRefrigerant);
+router.post('/admin/add', auth.verifyAdmin, refrigerantController.addRefrigerant);
 
 // Admin: Update refrigerant in CSV
-router.put('/admin/update/:id', refrigerantController.updateRefrigerant);
+router.put('/admin/update/:id', auth.verifyAdmin, refrigerantController.updateRefrigerant);
 
 // Admin: Delete refrigerant from CSV
-router.delete('/admin/delete/:id', refrigerantController.deleteRefrigerant);
+router.delete('/admin/delete/:id', auth.verifyAdmin, refrigerantController.deleteRefrigerant);
 
 module.exports = router;

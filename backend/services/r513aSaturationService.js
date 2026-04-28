@@ -8,7 +8,7 @@ function loadSaturationData() {
     if (saturationData) return saturationData;
 
     try {
-        const dataPath = path.join(__dirname, '../../513a/saturation properties 513A.json');
+        const dataPath = path.join(__dirname, '../data/r513a/saturation properties 513A.json');
         const rawData = fs.readFileSync(dataPath, 'utf-8');
         saturationData = JSON.parse(rawData);
         console.log('✓ R513A Saturation data loaded successfully');

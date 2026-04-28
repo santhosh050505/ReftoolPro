@@ -34,8 +34,13 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Username and password are required' });
     }
 
-    if (username.length < 3) {
-      return res.status(400).json({ error: 'Username must be at least 3 characters' });
+    // Validate username (3-15 characters, alphanumeric only)
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    if (username.length < 3 || username.length > 15) {
+      return res.status(400).json({ error: 'Username must be between 3 and 15 characters' });
+    }
+    if (!usernameRegex.test(username)) {
+      return res.status(400).json({ error: 'Username must contain only letters and numbers' });
     }
 
     // Validate password

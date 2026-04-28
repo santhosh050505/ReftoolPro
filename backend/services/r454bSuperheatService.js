@@ -8,7 +8,7 @@ function loadSuperheatData() {
   if (superheatData) return superheatData;
 
   try {
-    const dataPath = path.join(__dirname, '../../R454b/R454B_superheat.json');
+    const dataPath = path.join(__dirname, '../data/r454b/R454B_superheat.json');
     const rawData = fs.readFileSync(dataPath, 'utf-8');
     superheatData = JSON.parse(rawData);
     console.log('✓ R454B Superheat data loaded successfully');

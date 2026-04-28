@@ -4,7 +4,7 @@ const path = require('path');
 
 class SyncService {
   constructor() {
-    this.sourceFile = path.join(__dirname, '../../frontend/refrigerant-data/refrigerant-properties.json');
+    this.sourceFile = path.join(__dirname, '../data/refrigerant-properties.json');
     this.publicFile = path.join(__dirname, '../../frontend/public/refrigerant-data/refrigerant-properties.json');
     this.buildFile = path.join(__dirname, '../../frontend/build/refrigerant-data/refrigerant-properties.json');
     this.rangeSourceFile = path.join(__dirname, '../../refrigerant_updated.json');

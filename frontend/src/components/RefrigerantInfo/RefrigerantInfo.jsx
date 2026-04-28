@@ -13,31 +13,55 @@ const RefrigerantInfo = ({ selectedRefrigerant = 'R407C', temperatureUnit = 'cel
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load refrigerant data from both sources
+    // Load refrigerant data from available sources
     const loadRefrigerantData = async () => {
       setLoading(true);
       try {
-        // First, try to load from backend API (JSON - has complete data including custom refrigerants)
+        // FIRST: Try fetching from the public static JSON (no auth required, always available)
+        try {
+          const staticRes = await fetch('/refrigerant-data/refrigerant-properties.json');
+          if (staticRes.ok) {
+            const staticData = await staticRes.json();
+            // Data can be { refrigerants: [...] } or a flat object keyed by name
+            let allRefs = [];
+            if (Array.isArray(staticData.refrigerants)) {
+              allRefs = staticData.refrigerants;
+            } else if (typeof staticData === 'object') {
+              allRefs = Object.values(staticData);
+            }
+            const selected = allRefs.find(
+              r => r.name === selectedRefrigerant || r.rNumber === selectedRefrigerant
+            );
+            if (selected) {
+              setRefrigerantData(selected);
+              console.log('📋 Loaded refrigerant from public JSON:', selected.name);
+              setLoading(false);
+              return;
+            }
+          }
+        } catch (staticErr) {
+          console.warn('Public JSON not available, trying admin API:', staticErr.message);
+        }
+
+        // SECOND: Try admin API (works if user is admin)
         try {
           const response = await getAllRefrigerants();
-          // getAllRefrigerants now returns the array directly
           if (Array.isArray(response)) {
             const selected = response.find(
               r => r.name === selectedRefrigerant || r.rNumber === selectedRefrigerant
             );
-
             if (selected) {
               setRefrigerantData(selected);
-              console.log('📋 Loaded refrigerant from JSON:', selected.name);
+              console.log('📋 Loaded refrigerant from admin API:', selected.name);
               setLoading(false);
               return;
             }
           }
         } catch (apiError) {
-          console.warn('JSON API not available, trying CSV fallback:', apiError.message);
+          console.warn('Admin API not available, trying CSV fallback:', apiError.message);
         }
 
-        // Fallback: try to load from CSV if JSON not available
+        // THIRD: Try CSV fallback
         const chemicalProps = await CSVRefrigerantService.getChemicalProperties(selectedRefrigerant);
         if (chemicalProps) {
           const mappedCSVData = CSVRefrigerantService.mapToDisplayFormat(chemicalProps);
@@ -48,7 +72,6 @@ const RefrigerantInfo = ({ selectedRefrigerant = 'R407C', temperatureUnit = 'cel
           setHasCSVData(false);
         }
 
-        // If no data found, show empty/minimal data (no default R407C fallback)
         setRefrigerantData(null);
       } catch (err) {
         console.error('Error loading refrigerant data:', err);

@@ -6,10 +6,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "react-scripts start",
-    "build": "node ../scripts/sync-refrigerant-data.js && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "sync-data": "node ../scripts/sync-refrigerant-data.js"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "framer-motion": "^12.29.0",
@@ -33,5 +32,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1"
   }
 }

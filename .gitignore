@@ -1,12 +1,42 @@
+# Dependencies
 node_modules/
+
+# Build outputs
 dist/
 build/
+
+# Environment variables (NEVER commit real secrets)
 .env
+.env.local
+.env.*.local
+
+# Keep these — they contain only templates/placeholders
+# !.env.example
+# !.env.production
+
+# Logs
 *.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+.vscode/
+Thumbs.db
+
+# Archives
 *.zip
 *.tar
 *.rar
-.vscode/
+
+# Python
 __pycache__/
 *.pyc
 .venv/
+
+# Test artifacts
+playwright-report/
+test-results/
+.early.coverage/
+
+# Excel data (managed manually)
+# newdata.xlsx  ← keep this tracked

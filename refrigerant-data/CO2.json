@@ -1,7 +1,0 @@
-{
-  "name": "CO2",
-  "data": [
-    { "pressure": 1, "temperature": -78.5, "enthalpy": 150, "density": 1.98, "phase": "solid" }
-    // ...more data
-  ]
-}

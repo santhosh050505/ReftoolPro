@@ -1,7 +1,0 @@
-{
-  "name": "R404A",
-  "data": [
-    { "pressure": 1, "temperature": -46.5, "enthalpy": 180, "density": 4.90, "phase": "liquid" }
-    // ...more data
-  ]
-}

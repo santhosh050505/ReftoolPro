@@ -8,7 +8,7 @@ function loadSuperheatData() {
     if (superheatData) return superheatData;
 
     try {
-        const dataPath = path.join(__dirname, '../../513a/R513A Superheat.json');
+        const dataPath = path.join(__dirname, '../data/r513a/R513A Superheat.json');
         const rawData = fs.readFileSync(dataPath, 'utf-8');
         superheatData = JSON.parse(rawData);
         console.log('✓ R513A Superheat data loaded successfully');

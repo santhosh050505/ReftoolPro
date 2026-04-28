@@ -8,7 +8,7 @@ function loadSaturationData() {
   if (saturationData) return saturationData;
 
   try {
-    const dataPath = path.join(__dirname, '../../R454b/R454B_saturation.json');
+    const dataPath = path.join(__dirname, '../data/r454b/R454B_saturation.json');
     const rawData = fs.readFileSync(dataPath, 'utf-8');
     saturationData = JSON.parse(rawData);
     console.log('✓ R454B Saturation data loaded successfully');
