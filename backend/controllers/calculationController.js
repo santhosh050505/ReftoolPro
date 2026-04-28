@@ -45,7 +45,7 @@ exports.createCalculation = async (req, res) => {
     }
 
     // Check row limit (Max 10 per project)
-    const existingCount = await Calculation.countDocuments({ projectId, userId });
+    const existingCount = await Calculation.count({ projectId, userId });
     if (existingCount >= 10) {
       return res.status(400).json({
         error: 'Project limit reached (10 calculations maximum). Please delete an existing row to add a new one.'
@@ -53,7 +53,7 @@ exports.createCalculation = async (req, res) => {
     }
 
     // Determine order (last + 1)
-    const lastCalc = await Calculation.findOne({ projectId, userId }).sort({ order: -1 });
+    const lastCalc = await Calculation.findLast({ projectId, userId });
     const nextOrder = lastCalc ? (lastCalc.order || 0) + 1 : 0;
 
     // Project Constraints: Ensure settings are locked and enforced
@@ -64,88 +64,68 @@ exports.createCalculation = async (req, res) => {
         userId,
         refrigerant: { $ne: '-' },
         isManual: { $ne: true }
-      }).sort({ createdAt: 1 });
+      });
 
       if (firstExisting) {
-        project.lockedRefrigerant = firstExisting.refrigerant;
-        project.lockedPressureUnit = firstExisting.pressureUnit;
-        project.lockedTemperatureUnit = firstExisting.temperatureUnit;
-        await project.save();
+        await Project.findByIdAndUpdate(projectId, userId, {
+          locked_refrigerant: firstExisting.refrigerant,
+          locked_pressure_unit: firstExisting.pressure_unit,
+          locked_temperature_unit: firstExisting.temperature_unit
+        });
+        project.locked_refrigerant = firstExisting.refrigerant;
+        project.locked_pressure_unit = firstExisting.pressure_unit;
+        project.locked_temperature_unit = firstExisting.temperature_unit;
       } else if (refrigerant && refrigerant !== '-') {
-        // No existing valid calcs, this is the first one. Set the lock.
-        project.lockedRefrigerant = refrigerant.trim();
-        project.lockedPressureUnit = pressureUnit;
-        project.lockedTemperatureUnit = temperatureUnit;
-        await project.save();
+        await Project.findByIdAndUpdate(projectId, userId, {
+          locked_refrigerant: refrigerant.trim(),
+          locked_pressure_unit: pressureUnit,
+          locked_temperature_unit: temperatureUnit
+        });
+        project.locked_refrigerant = refrigerant.trim();
+        project.locked_pressure_unit = pressureUnit;
+        project.locked_temperature_unit = temperatureUnit;
       }
     }
 
     // Now enforce the lock ONLY IF it's set to something valid
-    if (project.lockedRefrigerant && project.lockedRefrigerant !== '-') {
+    if (project.locked_refrigerant && project.locked_refrigerant !== '-') {
       const reqRef = refrigerant.trim().toUpperCase();
-      const lockRef = project.lockedRefrigerant.toUpperCase();
-
+      const lockRef = project.locked_refrigerant.toUpperCase();
       const mismatch = [];
-      if (lockRef !== reqRef) mismatch.push(`refrigerant`);
-      if (project.lockedPressureUnit !== pressureUnit) mismatch.push(`pressure unit`);
-      if (project.lockedTemperatureUnit !== temperatureUnit) mismatch.push(`temperature unit`);
-
+      if (lockRef !== reqRef) mismatch.push('refrigerant');
+      if (project.locked_pressure_unit !== pressureUnit) mismatch.push('pressure unit');
+      if (project.locked_temperature_unit !== temperatureUnit) mismatch.push('temperature unit');
       if (mismatch.length > 0) {
-        let tempDisplay = project.lockedTemperatureUnit === 'celsius' ? 'C' : 'F';
+        const tempDisplay = project.locked_temperature_unit === 'celsius' ? 'C' : 'F';
         return res.status(400).json({
-          error: `Only this refrigerant and these units are allowed for this project: ${project.lockedRefrigerant}, ${project.lockedPressureUnit} and °${tempDisplay}`
+          error: `Only this refrigerant and these units are allowed: ${project.locked_refrigerant}, ${project.locked_pressure_unit} and °${tempDisplay}`
         });
       }
     }
 
-    const calculation = new Calculation({
-      projectId,
-      userId,
+    const calculation = await Calculation.create({
+      project_id: projectId,
+      user_id: userId,
       name: name.trim(),
       refrigerant: refrigerant.trim(),
       pressure,
-      pressureUnit,
+      pressure_unit: pressureUnit,
       temperature,
-      temperatureUnit,
-      distanceUnit: distanceUnit || 'meters',
+      temperature_unit: temperatureUnit,
+      distance_unit: distanceUnit || 'meters',
       altitude: altitude || 0,
-      ambientPressureData: ambientPressureData || null,
-      isDew: isDew !== undefined ? isDew : true,
-      isAbsolute: isAbsolute !== undefined ? isAbsolute : true,
-      actualTemperature: actualTemperature !== undefined ? actualTemperature : null,
-      defineStateCycle: defineStateCycle || null,
-      inputValue: inputValue !== undefined ? inputValue : null,
-      isManual: isManual !== undefined ? isManual : false,
-      liquidTemperature: liquidTemperature !== undefined ? liquidTemperature : null,
+      ambient_pressure_data: ambientPressureData || null,
+      is_dew: isDew !== undefined ? isDew : true,
+      is_absolute: isAbsolute !== undefined ? isAbsolute : true,
+      actual_temperature: actualTemperature !== undefined ? actualTemperature : null,
+      define_state_cycle: defineStateCycle || null,
+      input_value: inputValue !== undefined ? inputValue : null,
+      is_manual: isManual !== undefined ? isManual : false,
+      liquid_temperature: liquidTemperature !== undefined ? liquidTemperature : null,
       order: nextOrder
     });
 
-    await calculation.save();
-
-    res.status(201).json({
-      success: true,
-      message: 'Calculation saved successfully',
-      calculation: {
-        _id: calculation._id,
-        projectId: calculation.projectId,
-        name: calculation.name,
-        refrigerant: calculation.refrigerant,
-        pressure: calculation.pressure,
-        pressureUnit: calculation.pressureUnit,
-        temperature: calculation.temperature,
-        temperatureUnit: calculation.temperatureUnit,
-        distanceUnit: calculation.distanceUnit,
-        altitude: calculation.altitude,
-        ambientPressureData: calculation.ambientPressureData,
-        isDew: calculation.isDew,
-        isAbsolute: calculation.isAbsolute,
-        defineStateCycle: calculation.defineStateCycle,
-        inputValue: calculation.inputValue,
-        liquidTemperature: calculation.liquidTemperature,
-        createdAt: calculation.createdAt,
-        updatedAt: calculation.updatedAt
-      }
-    });
+    res.status(201).json({ success: true, message: 'Calculation saved successfully', calculation });
   } catch (error) {
     console.error('Create calculation error:', error);
     res.status(500).json({ error: 'Failed to save calculation' });
@@ -159,14 +139,10 @@ exports.getCalculationsByProject = async (req, res) => {
     const userId = req.user.userId;
 
     // Verify project exists and belongs to user
-    const project = await Project.findOne({ _id: projectId, userId });
-    if (!project) {
-      return res.status(404).json({ error: 'Project not found' });
-    }
+    const project = await Project.findOne({ id: projectId, userId });
+    if (!project) return res.status(404).json({ error: 'Project not found' });
 
-    const calculations = await Calculation.find({ projectId, userId })
-      .sort({ order: 1 })
-      .lean();
+    const calculations = await Calculation.find({ projectId, userId });
 
     res.json({
       success: true,
@@ -184,8 +160,7 @@ exports.getCalculation = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.userId;
 
-    const calculation = await Calculation.findOne({ _id: id, userId }).lean();
-
+    const calculation = await Calculation.findOne({ id, userId });
     if (!calculation) {
       return res.status(404).json({ error: 'Calculation not found' });
     }
@@ -225,81 +200,64 @@ exports.updateCalculation = async (req, res) => {
 
     const userId = req.user.userId;
 
-    // Get current calculation to find projectId
-    const existingCalc = await Calculation.findOne({ _id: id, userId });
-    if (!existingCalc) {
-      return res.status(404).json({ error: 'Calculation not found' });
-    }
+    const existingCalc = await Calculation.findOne({ id, userId });
+    if (!existingCalc) return res.status(404).json({ error: 'Calculation not found' });
 
-    // Verify project settings
-    const project = await Project.findOne({ _id: existingCalc.projectId, userId });
+    const project = await Project.findOne({ id: existingCalc.project_id, userId });
     if (project) {
-      if (!project.lockedRefrigerant || project.lockedRefrigerant === '-') {
-        // Initialize lock if missing or invalid, skipping placeholder rows
+      if (!project.locked_refrigerant || project.locked_refrigerant === '-') {
         const firstExisting = await Calculation.findOne({
-          projectId: existingCalc.projectId,
+          projectId: existingCalc.project_id,
           userId,
           refrigerant: { $ne: '-' },
           isManual: { $ne: true }
-        }).sort({ createdAt: 1 });
+        });
 
         if (firstExisting) {
-          project.lockedRefrigerant = firstExisting.refrigerant;
-          project.lockedPressureUnit = firstExisting.pressureUnit;
-          project.lockedTemperatureUnit = firstExisting.temperatureUnit;
-          await project.save();
+          await Project.findByIdAndUpdate(existingCalc.project_id, userId, {
+            locked_refrigerant: firstExisting.refrigerant,
+            locked_pressure_unit: firstExisting.pressure_unit,
+            locked_temperature_unit: firstExisting.temperature_unit
+          });
+          project.locked_refrigerant = firstExisting.refrigerant;
         }
       }
 
-      if (project.lockedRefrigerant && project.lockedRefrigerant !== '-') {
-        // If these are provided in update, they MUST match project settings
+      if (project.locked_refrigerant && project.locked_refrigerant !== '-') {
         const checkRef = (refrigerant !== undefined && refrigerant !== '-') ? refrigerant.trim().toUpperCase() : null;
-        const checkPress = pressureUnit !== undefined ? pressureUnit : null;
-        const checkTemp = temperatureUnit !== undefined ? temperatureUnit : null;
-
-        const lockRef = project.lockedRefrigerant.toUpperCase();
-
+        const lockRef = project.locked_refrigerant.toUpperCase();
         const mismatch = [];
-        if (checkRef && lockRef !== checkRef) mismatch.push(`refrigerant`);
-        if (checkPress && project.lockedPressureUnit !== checkPress) mismatch.push(`pressure unit`);
-        if (checkTemp && project.lockedTemperatureUnit !== checkTemp) mismatch.push(`temperature unit`);
-
+        if (checkRef && lockRef !== checkRef) mismatch.push('refrigerant');
+        if (pressureUnit && project.locked_pressure_unit !== pressureUnit) mismatch.push('pressure unit');
+        if (temperatureUnit && project.locked_temperature_unit !== temperatureUnit) mismatch.push('temperature unit');
         if (mismatch.length > 0) {
-          let tempDisplay = project.lockedTemperatureUnit === 'celsius' ? 'C' : 'F';
+          const tempDisplay = project.locked_temperature_unit === 'celsius' ? 'C' : 'F';
           return res.status(400).json({
-            error: `Only this refrigerant and these units are allowed for this project: ${project.lockedRefrigerant}, ${project.lockedPressureUnit} and °${tempDisplay}`
+            error: `Only this refrigerant and these units are allowed: ${project.locked_refrigerant}, ${project.locked_pressure_unit} and °${tempDisplay}`
           });
         }
       }
     }
 
-    // Build update object
-    const updateData = {
-      updatedAt: Date.now()
-    };
-
+    const updateData = {};
     if (name !== undefined) updateData.name = name.trim();
     if (refrigerant !== undefined) updateData.refrigerant = refrigerant.trim();
     if (pressure !== undefined) updateData.pressure = pressure;
-    if (pressureUnit !== undefined) updateData.pressureUnit = pressureUnit;
+    if (pressureUnit !== undefined) updateData.pressure_unit = pressureUnit;
     if (temperature !== undefined) updateData.temperature = temperature;
-    if (temperatureUnit !== undefined) updateData.temperatureUnit = temperatureUnit;
-    if (distanceUnit !== undefined) updateData.distanceUnit = distanceUnit;
+    if (temperatureUnit !== undefined) updateData.temperature_unit = temperatureUnit;
+    if (distanceUnit !== undefined) updateData.distance_unit = distanceUnit;
     if (altitude !== undefined) updateData.altitude = altitude;
-    if (ambientPressureData !== undefined) updateData.ambientPressureData = ambientPressureData;
-    if (isDew !== undefined) updateData.isDew = isDew;
-    if (isAbsolute !== undefined) updateData.isAbsolute = isAbsolute;
-    if (actualTemperature !== undefined) updateData.actualTemperature = actualTemperature;
-    if (defineStateCycle !== undefined) updateData.defineStateCycle = defineStateCycle;
-    if (inputValue !== undefined) updateData.inputValue = inputValue;
-    if (isManual !== undefined) updateData.isManual = isManual;
-    if (liquidTemperature !== undefined) updateData.liquidTemperature = liquidTemperature;
+    if (ambientPressureData !== undefined) updateData.ambient_pressure_data = ambientPressureData;
+    if (isDew !== undefined) updateData.is_dew = isDew;
+    if (isAbsolute !== undefined) updateData.is_absolute = isAbsolute;
+    if (actualTemperature !== undefined) updateData.actual_temperature = actualTemperature;
+    if (defineStateCycle !== undefined) updateData.define_state_cycle = defineStateCycle;
+    if (inputValue !== undefined) updateData.input_value = inputValue;
+    if (isManual !== undefined) updateData.is_manual = isManual;
+    if (liquidTemperature !== undefined) updateData.liquid_temperature = liquidTemperature;
 
-    const calculation = await Calculation.findOneAndUpdate(
-      { _id: id, userId },
-      updateData,
-      { new: true }
-    );
+    const calculation = await Calculation.findByIdAndUpdate(id, userId, updateData);
 
     if (!calculation) {
       return res.status(404).json({ error: 'Calculation not found' });
@@ -326,19 +284,7 @@ exports.bulkUpdateCalculations = async (req, res) => {
       return res.status(400).json({ error: 'Updates must be an array' });
     }
 
-    const bulkOps = updates.map(update => ({
-      updateOne: {
-        filter: { _id: update.id, userId },
-        update: {
-          $set: {
-            ...update.data,
-            updatedAt: Date.now()
-          }
-        }
-      }
-    }));
-
-    await Calculation.bulkWrite(bulkOps);
+    await Calculation.bulkUpdate(updates, userId);
 
     res.json({
       success: true,
@@ -356,8 +302,7 @@ exports.deleteCalculation = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.userId;
 
-    const calculation = await Calculation.findOneAndDelete({ _id: id, userId });
-
+    const calculation = await Calculation.findByIdAndDelete(id, userId);
     if (!calculation) {
       return res.status(404).json({ error: 'Calculation not found' });
     }

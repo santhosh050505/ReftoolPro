@@ -1,75 +1,69 @@
-const mongoose = require('mongoose');
+// backend/models/History.js — Supabase version
+const supabase = require('../config/supabase');
 
-const historySchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-    index: true
+const History = {
+  async create(data) {
+    const { data: row, error } = await supabase
+      .from('history')
+      .insert({ ...data, created_at: new Date().toISOString() })
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return row;
   },
-  projectId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Project',
-    required: false
+
+  async count({ userId }) {
+    const { count, error } = await supabase
+      .from('history')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId);
+    if (error) throw new Error(error.message);
+    return count || 0;
   },
-  name: {
-    type: String,
-    required: false,
-    trim: true,
-    maxlength: 100
+
+  async findOldest({ userId }, limit) {
+    const { data, error } = await supabase
+      .from('history')
+      .select('id')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true })
+      .limit(limit);
+    if (error) throw new Error(error.message);
+    return data || [];
   },
-  refrigerant: {
-    type: String,
-    trim: true,
-    default: '-'
+
+  async deleteByIds(ids) {
+    const { error } = await supabase.from('history').delete().in('id', ids);
+    if (error) throw new Error(error.message);
   },
-  pressure: {
-    type: Number,
-    default: null
+
+  async findByUser({ userId }) {
+    const { data, error } = await supabase
+      .from('history')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(10);
+    if (error) throw new Error(error.message);
+    return data || [];
   },
-  pressureUnit: {
-    type: String,
-    trim: true,
-    default: 'bar'
+
+  async findByIdAndDelete(id, userId) {
+    const { data, error } = await supabase
+      .from('history')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', userId)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
-  temperature: {
-    type: Number,
-    default: null
-  },
-  temperatureUnit: {
-    type: String,
-    trim: true,
-    default: 'celsius'
-  },
-  distanceUnit: {
-    type: String,
-    default: 'meters',
-    trim: true
-  },
-  altitude: {
-    type: Number,
-    default: 0
-  },
-  ambientPressureData: {
-    type: mongoose.Schema.Types.Mixed,
-    default: null
-  },
-  isDew: {
-    type: Boolean,
-    default: true
-  },
-  isAbsolute: {
-    type: Boolean,
-    default: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    index: true
+
+  async deleteAll({ userId }) {
+    const { error } = await supabase.from('history').delete().eq('user_id', userId);
+    if (error) throw new Error(error.message);
   }
-});
+};
 
-// Index for getting latest 10 entries efficiently
-historySchema.index({ userId: 1, createdAt: -1 });
-
-module.exports = mongoose.model('History', historySchema);
+module.exports = History;

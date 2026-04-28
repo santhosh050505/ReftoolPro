@@ -1,37 +1,17 @@
-const mongoose = require('mongoose');
+// backend/models/Admin.js — Supabase version
 const bcrypt = require('bcryptjs');
+const supabase = require('../config/supabase');
 
-const adminSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    default: 'Vectarc'
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
-    default: 'admin'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
+const Admin = {
+  async findOne({ username }) {
+    const { data, error } = await supabase
+      .from('admins')
+      .select('*')
+      .eq('username', username)
+      .single();
+    if (error || !data) return null;
+    return { ...data, comparePassword: async (pwd) => bcrypt.compare(pwd, data.password) };
   }
-});
-
-// Hash password before saving
-adminSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
-
-// Compare password method
-adminSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model('Admin', adminSchema);
+module.exports = Admin;

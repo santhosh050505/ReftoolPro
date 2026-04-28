@@ -1,115 +1,115 @@
-const mongoose = require('mongoose');
+// backend/models/Calculation.js — Supabase version
+const supabase = require('../config/supabase');
 
-const calculationSchema = new mongoose.Schema({
-  projectId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Project',
-    required: true,
-    index: true
+const Calculation = {
+  async create(data) {
+    const { data: row, error } = await supabase
+      .from('calculations')
+      .insert({ ...data, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return row;
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-    index: true
+
+  async find({ projectId, userId }) {
+    const { data, error } = await supabase
+      .from('calculations')
+      .select('*')
+      .eq('project_id', projectId)
+      .eq('user_id', userId)
+      .order('order', { ascending: true });
+    if (error) throw new Error(error.message);
+    return data || [];
   },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    maxlength: 100
+
+  async findOne(filter) {
+    let query = supabase.from('calculations').select('*');
+    if (filter.id) query = query.eq('id', filter.id);
+    if (filter.userId) query = query.eq('user_id', filter.userId);
+    if (filter.projectId) query = query.eq('project_id', filter.projectId);
+    if (filter.refrigerant && filter.refrigerant.$ne) query = query.neq('refrigerant', filter.refrigerant.$ne);
+    if (filter.isManual && filter.isManual.$ne !== undefined) query = query.neq('is_manual', filter.isManual.$ne);
+    query = query.order('created_at', { ascending: true }).limit(1).single();
+    const { data, error } = await query;
+    if (error || !data) return null;
+    return data;
   },
-  refrigerant: {
-    type: String,
-    trim: true,
-    default: '-'
+
+  async count({ projectId, userId }) {
+    const { count, error } = await supabase
+      .from('calculations')
+      .select('*', { count: 'exact', head: true })
+      .eq('project_id', projectId)
+      .eq('user_id', userId);
+    if (error) throw new Error(error.message);
+    return count || 0;
   },
-  pressure: {
-    type: Number,
-    default: null
+
+  async findLast({ projectId, userId }) {
+    const { data, error } = await supabase
+      .from('calculations')
+      .select('order')
+      .eq('project_id', projectId)
+      .eq('user_id', userId)
+      .order('order', { ascending: false })
+      .limit(1)
+      .single();
+    if (error || !data) return null;
+    return data;
   },
-  pressureUnit: {
-    type: String,
-    trim: true,
-    default: 'bar'
+
+  async findByIdAndUpdate(id, userId, updates) {
+    const { data, error } = await supabase
+      .from('calculations')
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .eq('user_id', userId)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
-  temperature: {
-    type: Number,
-    default: null
+
+  async findByIdAndDelete(id, userId) {
+    const { data, error } = await supabase
+      .from('calculations')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', userId)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
-  temperatureUnit: {
-    type: String,
-    trim: true,
-    default: 'celsius'
+
+  async deleteMany({ projectId, userId }) {
+    const { error } = await supabase
+      .from('calculations')
+      .delete()
+      .eq('project_id', projectId)
+      .eq('user_id', userId);
+    if (error) throw new Error(error.message);
   },
-  distanceUnit: {
-    type: String,
-    default: 'meters',
-    trim: true
+
+  async insertMany(rows) {
+    const { error } = await supabase.from('calculations').insert(rows);
+    if (error) throw new Error(error.message);
   },
-  altitude: {
-    type: Number,
-    default: 0
-  },
-  ambientPressureData: {
-    type: mongoose.Schema.Types.Mixed,
-    default: null
-  },
-  isDew: {
-    type: Boolean,
-    default: true
-  },
-  isAbsolute: {
-    type: Boolean,
-    default: true
-  },
-  actualTemperature: {
-    type: Number,
-    default: null
-  },
-  order: {
-    type: Number,
-    default: 0
-  },
-  defineStateCycle: {
-    type: String,
-    trim: true,
-    default: null
-  },
-  inputValue: {
-    type: Number,
-    default: null
-  },
-  isManual: {
-    type: Boolean,
-    default: false
-  },
-  sequence: {
-    type: Number,
-    default: null
-  },
-  liquidTemperature: {
-    type: Number,
-    default: null
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+
+  async bulkUpdate(updates, userId) {
+    const results = await Promise.all(
+      updates.map(({ id, data }) =>
+        supabase
+          .from('calculations')
+          .update({ ...data, updated_at: new Date().toISOString() })
+          .eq('id', id)
+          .eq('user_id', userId)
+      )
+    );
+    const failed = results.find(r => r.error);
+    if (failed) throw new Error(failed.error.message);
   }
-});
+};
 
-// Update the updatedAt timestamp before saving
-calculationSchema.pre('save', function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
-
-// Indexes for faster queries
-calculationSchema.index({ projectId: 1, createdAt: -1 });
-calculationSchema.index({ userId: 1, createdAt: -1 });
-
-module.exports = mongoose.model('Calculation', calculationSchema);
+module.exports = Calculation;

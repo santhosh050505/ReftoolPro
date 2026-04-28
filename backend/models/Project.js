@@ -1,74 +1,66 @@
-const mongoose = require('mongoose');
+// backend/models/Project.js — Supabase version
+const supabase = require('../config/supabase');
 
-const projectSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-    index: true
+const Project = {
+  async create(data) {
+    const { data: row, error } = await supabase
+      .from('projects')
+      .insert({ ...data, created_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return row;
   },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1,
-    maxlength: 100
+
+  async find({ userId }) {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data || [];
   },
-  description: {
-    type: String,
-    trim: true,
-    maxlength: 500,
-    default: ''
+
+  async findOne({ id, userId }) {
+    const query = supabase.from('projects').select('*');
+    if (id) query.eq('id', id);
+    if (userId) query.eq('user_id', userId);
+    const { data, error } = await query.single();
+    if (error || !data) return null;
+    return data;
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+
+  async findByIdAndUpdate(id, userId, updates) {
+    const { data, error } = await supabase
+      .from('projects')
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .eq('user_id', userId)
+      .select()
+      .single();
+    if (error) throw new Error(error.message);
+    return data;
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+
+  async findByNamePattern(userId, pattern) {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('id, name')
+      .eq('user_id', userId)
+      .ilike('name', pattern);
+    if (error) return [];
+    return data || [];
   },
-  lockedRefrigerant: {
-    type: String,
-    trim: true,
-    default: null
-  },
-  lockedPressureUnit: {
-    type: String,
-    trim: true,
-    default: null
-  },
-  lockedTemperatureUnit: {
-    type: String,
-    trim: true,
-    default: null
-  },
-  lockedIsAbsolute: {
-    type: Boolean,
-    default: true
-  },
-  productType: {
-    type: String,
-    enum: ['Heat Pump', 'Air Handling Unit', 'Chiller', 'Custom Project'],
-    default: 'Custom Project'
-  },
-  stateCycle: {
-    type: String,
-    default: 'Select your option'
-  },
-  compressorEfficiency: {
-    type: Number,
-    default: 1.0
+
+  async deleteOne(id, userId) {
+    const { error } = await supabase
+      .from('projects')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', userId);
+    if (error) throw new Error(error.message);
   }
-});
+};
 
-// Update the updatedAt timestamp before saving
-projectSchema.pre('save', function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
-
-// Index for faster queries
-projectSchema.index({ userId: 1, createdAt: -1 });
-
-module.exports = mongoose.model('Project', projectSchema);
+module.exports = Project;
