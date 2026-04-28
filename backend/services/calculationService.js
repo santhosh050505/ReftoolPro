@@ -519,12 +519,46 @@ const getFullRefrigerantRanges = async (refrigerant) => {
       throw new Error('Invalid response from Danfoss API');
     }
 
-    // Danfoss API provides limits directly in the response object
-    // Values are in the units requested (bar and celsius in our payload)
-    const minBar = response.data.minPressure !== undefined ? parseFloat(response.data.minPressure) : 0.1;
-    const maxBar = response.data.maxPressure !== undefined ? parseFloat(response.data.maxPressure) : 1000;
-    const minC = response.data.minTemperature !== undefined ? parseFloat(response.data.minTemperature) : -100;
-    const maxC = response.data.maxTemperature !== undefined ? parseFloat(response.data.maxTemperature) : 200;
+    // --- Extract pressure range ---
+    // Try root-level fields first (some refrigerants return them directly)
+    let minBar = response.data.minPressure !== undefined ? parseFloat(response.data.minPressure) : null;
+    let maxBar = response.data.maxPressure !== undefined ? parseFloat(response.data.maxPressure) : null;
+
+    // Fall back to deriving range from the saturation curve data array
+    // (Most blends like R403B, R404A, etc. only provide data[] with {p, t} points)
+    if ((minBar === null || maxBar === null || minBar === 0.1) &&
+        response.data.data && Array.isArray(response.data.data) && response.data.data.length > 0) {
+      const pressures = response.data.data
+        .map(d => parseFloat(d.p))
+        .filter(p => !isNaN(p) && p > 0);
+      if (pressures.length > 0) {
+        minBar = Math.min(...pressures);
+        maxBar = Math.max(...pressures);
+      }
+    }
+
+    // Final safety fallback (should rarely be hit)
+    if (minBar === null || isNaN(minBar)) minBar = 0.1;
+    if (maxBar === null || isNaN(maxBar)) maxBar = 100;
+
+    // --- Extract temperature range ---
+    let minC = response.data.minTemperature !== undefined ? parseFloat(response.data.minTemperature) : null;
+    let maxC = response.data.maxTemperature !== undefined ? parseFloat(response.data.maxTemperature) : null;
+
+    // Fall back to deriving temperature range from the saturation curve
+    if ((minC === null || maxC === null) &&
+        response.data.data && Array.isArray(response.data.data) && response.data.data.length > 0) {
+      const temps = response.data.data
+        .map(d => parseFloat(d.t))
+        .filter(t => !isNaN(t));
+      if (temps.length > 0) {
+        minC = Math.min(...temps);
+        maxC = Math.max(...temps);
+      }
+    }
+
+    if (minC === null || isNaN(minC)) minC = -100;
+    if (maxC === null || isNaN(maxC)) maxC = 200;
 
     // Convert pressure ranges to all supported units
     pressureUnits.forEach(unit => {

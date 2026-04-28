@@ -123,9 +123,12 @@ class RefrigerantRangeService {
     const range = await this.getPressureRange(refrigerant, pressureUnit);
 
     if (!range) {
+      // If we can't get range data, don't block the user — Danfoss API will
+      // validate the actual calculation anyway.
+      console.warn(`⚠️ Range data not available for '${refrigerant}' in '${pressureUnit}' — skipping range check`);
       return {
-        valid: false,
-        message: `Range data not found for ${refrigerant} in ${pressureUnit}`,
+        valid: true,
+        message: `Range check skipped for ${refrigerant} (data unavailable)`,
         min: null,
         max: null
       };
@@ -161,9 +164,12 @@ class RefrigerantRangeService {
     const range = await this.getTemperatureRange(refrigerant, temperatureUnit);
 
     if (!range) {
+      // If we can't get range data, don't block the user — Danfoss API will
+      // validate the actual calculation anyway.
+      console.warn(`⚠️ Range data not available for '${refrigerant}' in '${temperatureUnit}' — skipping range check`);
       return {
-        valid: false,
-        message: `Range data not found for ${refrigerant} in ${temperatureUnit}`,
+        valid: true,
+        message: `Range check skipped for ${refrigerant} (data unavailable)`,
         min: null,
         max: null
       };
