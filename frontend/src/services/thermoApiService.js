@@ -7,7 +7,7 @@ import { getCachedR454BData } from './r454bDataService';
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // ── Refrigerant name normalizer ───────────────────────────────────────────────
-// ── Refrigerant name normalizer ───────────────────────────────────────────────
+// hi
 
 const REFRIGERANT_MAP = {
   'R12': 'R12', '12': 'R12',
